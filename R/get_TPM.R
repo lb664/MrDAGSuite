@@ -1,0 +1,63 @@
+# 135 characters #####################################################################################################################
+#' @title Threshold Posterior model
+#' @description Model obtained by thresholding the estimated Posterior Edge Inclusion Probabilities (PEIPs). The resulting model 
+#' is a Partially Directed Acyclic Graph (PDAG)
+#'
+#' @param output Output produced by the \code{MrDAG} algorithm
+#' @param ord Indices of the traits in \code{data} that define the outcomes and exposures. They determine the order in which traits
+#' appear when printing the estimated PEIPs. If \code{ord = NULL}, the ordering follows \code{MRconstraint} in the \code{MrDAG} output.
+#' @param threshold Level (default \code{0.5}) that generates a Threshold Posterior Model. At the default value, it generates the 
+#' Median Posterior Model
+#'
+#' @export
+#'
+#' @return The value returned is a list object \code{list(TPM, ord, threshold)}:
+#' \describe{
+#'   \item{\code{TPM}}{ Adjacency matrix of the Threshold Posterior Model }
+#'   \item{\code{ord}}{ Indices of the traits in \code{data} that specify the outcomes and the exposures }
+#'   \item{\code{threshold}}{ Threshold of the PEIPs that defines the model } }
+#'
+#'
+#' @examples
+#' \dontrun{
+#' # Example
+#' # Estimation of the Threshold Posterior Model of lifestyle and behavioural traits, and mental
+#' # health phenotypes. 708 independent instrumental variables (IVs) were selected to be
+#' # associated at genome-wide significance with six lifestyle and behavioural traits after
+#' # pruning or clumping, which are considered exposures for the risk of seven mental health
+#' # outcome phenotypes
+#'
+#' # After loading the dataset:
+#'
+#' data(LBT2MD_data)
+#'
+#' # The indices of the traits that define the outcomes and exposures are provided in a list object:
+#'
+#' MRconstraint <- NULL
+#' MRconstraint$Y_idx <- 1 : 7    # Mental health phenotypes
+#' MRconstraint$X_idx <- 8 : 13   # Lifestyle and behavioural traits
+#'
+#' # The MrDAG algorithm is run to generate 2,000 posterior samples of all unknowns
+#'
+#' output <- MrDAG(data = LBT2MD_data$data, gencov = LBT2MD_data$gencov,
+#'                 niter = 150000, burnin = 50000, thin = 50, pp = 0.1, tempMax = 20,
+#'                 MRconstraint = MRconstraint, fileName = NULL)
+#'
+#' # Finally, the Median Posterior Model is estimated and presented with an order of appearance
+#' # that is changed within the outcomes and within the exposures compared to the order of the
+#' # traits in the MrDAG output
+#'
+#' ord <- c(c(6, 2, 1, 3, 4, 7, 5), c(9, 11, 13, 8, 12, 10))
+#' TPM <- get_TPM(output, ord = ord)
+#' }
+
+
+########## get_TPM ##########
+
+get_TPM <- function(output, ord = NULL, threshold = 0.5)
+{ 
+  postEdgeProb <- get_postEdgeProb(output, ord)$postEdgeProb
+  TPM <- (postEdgeProb >= threshold) * 1
+  
+  return(list(TPM = TPM, ord = ord, threshold = threshold))
+}

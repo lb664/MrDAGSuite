@@ -1,0 +1,43 @@
+Package: MrDAGSuite
+Type: Package
+Title: Fully Automated Bayesian Causal Graphical Analysis of Multiple Exposures and Outcomes with Genetic Anchors
+Version: 0.1.0
+Date: 2026-10-24
+Authors@R: c(
+    person("Leonardo", "Bottolo", email = "lb664@cam.ac.uk", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-6381-2327")),
+    person("Verena", "Zuber", email = "v.zuber@imperial.ac.uk", role = c("aut", "ctb"),
+           comment = c(ORCID = "0000-0001-9827-1877")))
+Description: Extends the MrDAG package <https://github.com/lb664/MrDAG>, a Bayesian two-sample summary-level Mendelian randomization (MR) method which explicitly models dependency relations within the exposures, the outcomes and between them, with six major advances: (1) a customisable preprocessing script (inst/scripts/MrDAG_data_preprocessing), which users can modify to suit their own data, generating summary-level IVW data directly from GWAS data repositories, and simMrDAG to simulate data from a user-specified DAG topology; (2) a correction for the sample overlap between the GWAS, based on per-instrument sample-overlap covariances (argument gencov) that the preprocessing script estimates with linkage disequilibrium (LD) Score Regression; (3) a correction for correlated IVs, based on whitening the summary statistics with the LD correlation matrix between the IVs (argument LD); (4) a fully automated pipeline (analyzer4MrDAG) integrating DAG structure learning, invalid IV detection (invIV4MrDAG) and bootstrap genetically predicted effect estimation to overcome weak-IV bias (boot4MrDAG) in a single call; (5) new get_, qgraph_ and plot_ functions to extract and visualise the Maximum A Posteriori (MAP) DAG, Threshold Posterior Model (TPM), Posterior Edge Inclusion Probabilities (PEIPs), genetically predicted effects with credible intervals, bootstrap edge frequencies and bootstrap genetically predicted effects; and (6) core MCMC routines re-implemented in C++ via Rcpp and RcppArmadillo. The underlying MCMC algorithm for joint Bayesian structure learning and genetically predicted effect estimation is described in Bottolo et al. (2026, submitted) and Zuber et al. (2025) <doi:10.1016/j.ajhg.2025.03.005>.
+License: GPL-2 | file LICENSE
+Encoding: UTF-8
+VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)
+RdMacros: Rdpack
+Imports:
+    ggpattern,
+    ggplot2,
+    ggpubr,
+    grDevices,
+    MASS,
+    methods,
+    pcalg,
+    qgraph,
+    RBGL,
+    Rcpp,
+    Rdpack,
+    reshape2,
+    SimCorMultRes,
+    stats,
+    utils
+LinkingTo:
+    Rcpp,
+    RcppArmadillo
+Suggests:
+    ieugwasr,
+    knitr,
+    rmarkdown
+Depends:
+    R (>= 3.5.0)
+LazyData: true
+Config/roxygen2/version: 8.0.0

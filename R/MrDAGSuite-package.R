@@ -1,0 +1,59 @@
+# 135 characters #####################################################################################################################
+#' @title MrDAGSuite: Fully Automated Bayesian Causal Graphical Analysis of Multiple Exposures and Outcomes with Genetic Anchors
+#' @description Extends the MrDAG package \url{https://github.com/lb664/MrDAG}, a Bayesian two-sample summary-level Mendelian
+#' randomization (MR) method which explicitly models dependency relations within the exposures, the outcomes and between them, with
+#' six major advances: (1) a customisable preprocessing script (\code{inst/scripts/MrDAG_data_preprocessing}), which users can modify to suit their own data, generating summary-level IVW data
+#' directly from GWAS data repositories, and \code{simMrDAG} to simulate data from a user-specified DAG topology; (2) a correction
+#' for the sample overlap between the GWAS, based on per-instrument sample-overlap covariances (argument \code{gencov}) that the
+#' preprocessing script estimates with linkage disequilibrium (LD) Score Regression; (3) a correction for correlated IVs, based on
+#' whitening the summary statistics with the LD correlation matrix between the IVs (argument \code{LD}); (4) a fully automated
+#' pipeline (\code{analyzer4MrDAG}) integrating DAG structure learning, invalid IV detection (\code{invIV4MrDAG}) and bootstrap
+#' genetically predicted effect estimation to overcome weak-IV bias (\code{boot4MrDAG}) in a single call; (5) new \code{get_},
+#' \code{qgraph_} and \code{plot_} functions to extract and visualise the Maximum A Posteriori (MAP) DAG, Threshold Posterior
+#' Model (TPM), Posterior Edge Inclusion Probabilities (PEIPs), genetically predicted effects with credible intervals, bootstrap
+#' edge frequencies and bootstrap genetically predicted effects; and (6) core MCMC routines re-implemented in C++ via Rcpp and
+#' RcppArmadillo.
+#' The underlying MCMC algorithm for joint Bayesian structure learning and genetically predicted effect estimation is described in
+#' Bottolo et al. (2026, submitted) and \insertCite{Zuber2025;textual}{MrDAGSuite}.
+#'
+#' @details
+#' The main functions are:
+#' \describe{
+#'   \item{\code{\link{MrDAG}}}{Core MCMC sampler for joint DAG structure learning and genetically predicted effect estimation}
+#'   \item{\code{\link{analyzer4MrDAG}}}{Fully automated pipeline integrating DAG learning, invalid IV detection and bootstrap
+#'         genetically predicted effect estimation}
+#'   \item{\code{\link{invIV4MrDAG}}}{Detection of invalid instrumental variables}
+#'   \item{\code{\link{boot4MrDAG}}}{Bootstrap genetically predicted effect estimation to overcome weak-IV bias}
+#'   \item{\code{\link{get_MAP}}}{Extract the Maximum A Posteriori (MAP) DAG}
+#'   \item{\code{\link{get_TPM}}}{Extract the Threshold Posterior Model (TPM)}
+#'   \item{\code{\link{get_postEdgeProb}}}{Extract Posterior Edge Inclusion Probabilities (PEIPs)}
+#'   \item{\code{\link{get_genPredEffect}}}{Extract a single genetically predicted effect with credible interval}
+#'   \item{\code{\link{get_genPredEffects}}}{Extract all genetically predicted effects with credible intervals}
+#'   \item{\code{\link{plot_genPredEffects}}}{Plot genetically predicted effects with credible intervals}
+#'   \item{\code{\link{plot_bootGenPredEffects}}}{Plot bootstrap genetically predicted effects}
+#'   \item{\code{\link{plot_bootEdgeFreq}}}{Plot bootstrap edge frequencies}
+#'   \item{\code{\link{plot_postEdgeProb}}}{Plot Posterior Edge Inclusion Probabilities}
+#'   \item{\code{\link{plot_convdiagnostic}}}{Plot MCMC convergence diagnostics}
+#'   \item{\code{\link{qgraph_postEdgeProb}}}{Visualise edge probabilities via qgraph}
+#'   \item{\code{\link{qgraph_genPredEffects}}}{Visualise genetically predicted effects via qgraph}
+#'   \item{\code{\link{simMrDAG}}}{Simulate data from a user-specified DAG topology}
+#' }
+#'
+#' @references
+#' \insertAllCited{}
+#'
+#' @name MrDAGSuite-package
+#' @aliases MrDAGSuite
+#'
+#' @importFrom methods is new
+#' @importFrom Rcpp sourceCpp
+#' @importFrom Rdpack reprompt
+#' @importFrom stats p.adjust
+#' @importFrom utils write.csv
+#' @useDynLib MrDAGSuite, .registration = TRUE
+#' @author
+#' Maintainer: Leonardo Bottolo <lb664@@cam.ac.uk>
+#'
+#' Author: Verena Zuber <v.zuber@@imperial.ac.uk>
+#'
+"_PACKAGE"
