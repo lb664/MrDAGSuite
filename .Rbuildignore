@@ -1,0 +1,4 @@
+^inst/figures$
+^\.gitignore$
+^.*\.Rproj$
+^\.Rproj\.user$
